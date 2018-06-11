@@ -1,0 +1,37 @@
+spring:
+  application:
+    name: invoice-service
+  cloud:
+    consul:
+      enabled: true
+      host: 192.168.1.235
+      port: 8500
+      config:
+        enabled: true
+        prefix: config
+        defaultContext: application
+        data-key: data
+        profileSeparator: '::'
+        format: yaml
+        failFast: false
+      discovery:
+        enabled: true
+        register-health-check: true
+        instanceId: ${spring.application.name}:${vcap.application.instance_id:${spring.application.instance_id:${random.value}}}
+server:
+  port: 8081
+
+endpoints:
+  health:
+    sensitive: false
+  restart:
+    enabled: true
+  shutodown:
+    enabled: true
+
+management:
+  security:
+    enabled: false
+  endpoint:
+    info:
+      enabled: true
