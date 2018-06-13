@@ -7,14 +7,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.naming.ServiceUnavailableException;
+
 @RestController
 public class InvoiceController {
 
     @Autowired
     Invoice invoice;
 
-    @GetMapping("/invoice/{zip}/{item}")
-    public Double getInvoice(@PathVariable(value = "zip") int zip, @PathVariable(value ="item" ) String item){
-        return Double.valueOf(0);
+    @GetMapping("/invoice/{cost}")
+    public Double getInvoice(@PathVariable(value = "cost") double cost) throws ServiceUnavailableException {
+        return invoice.calculatePrice(cost);
     }
 }
